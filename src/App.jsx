@@ -1,18 +1,16 @@
 import { useState } from 'react';
 import Header from './components/Header/Header.jsx';
 import CoreConcept from './components/CoreConcept/CoreConcept.jsx';
-
 import TabButton from './components/TabButton/TabButton.jsx';
 
 import { CORE_CONCEPTS } from './data.js'
-
-let defaultContent = "Press a button";
+import { EXAMPLES } from './data.js'
 
 function App() {
-  const [content, setContent] = useState("Press a button");
+  const [selectedTopic, setSelectedTopic] = useState();
 
   function handleClick(selectedButton){
-    setContent(selectedButton);
+    setSelectedTopic(selectedButton);
     //console.log(selectedButton);
   }
   
@@ -49,7 +47,23 @@ function App() {
             <TabButton onClick={() => {handleClick('props')}} >Props</TabButton>
             <TabButton onClick={() => {handleClick('state')}}>State</TabButton>
           </menu>
-          {content}
+
+          {selectedTopic === undefined ? (
+          <p>Please select a topic.</p>
+          ) :(
+            (
+              <div id="tab-content">
+              <h3>{EXAMPLES[selectedTopic].title}</h3>
+              <p>{EXAMPLES[selectedTopic].description}</p>
+              <pre>
+                <code>
+                {EXAMPLES[selectedTopic].code}
+                </code>
+              </pre>
+            </div>
+            )
+          )}
+          
         </section>
       </main>
     </div>
